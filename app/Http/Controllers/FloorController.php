@@ -12,15 +12,11 @@ class FloorController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $floors = Floor::all();
+        return response()->json([
+            'message'=>'Get all floors succesfully!',
+            'floors'=>$floors
+        ]);
     }
 
     /**
@@ -28,7 +24,16 @@ class FloorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'floor_number'=>'required|string|max:50|unique:floors,floor_number',
+            'building_id'=>'required|integer|exists:buildings,id'
+        ]);
+        
+        $floor = Floor::create($validated);
+        return response()->json([
+            'message'=>'Floor created successfully!',
+            'floor'=>$floor
+        ], 201);
     }
 
     /**
@@ -36,15 +41,10 @@ class FloorController extends Controller
      */
     public function show(Floor $floor)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Floor $floor)
-    {
-        //
+        return response()->json([
+            'message'=>'Get floor by Id successfully',
+            'floor'=>$floor,
+        ], 200);
     }
 
     /**
@@ -52,7 +52,16 @@ class FloorController extends Controller
      */
     public function update(Request $request, Floor $floor)
     {
-        //
+        $validated = $request->validate([
+            'floor_number'=>'required|string|max:50',
+            'building_id'=>'required|integer|unique:floor,building_id'
+        ]);
+        
+        $floor->update($validated);
+        return response()->json([
+            'message'=>'Floor updated successfully!',
+            'floor'=>$floor
+        ], 200);
     }
 
     /**
@@ -60,6 +69,9 @@ class FloorController extends Controller
      */
     public function destroy(Floor $floor)
     {
-        //
+        $floor->delete();
+        return response()->json([
+            'message'=>'Deleted floor successfully!',
+        ], 200);
     }
 }

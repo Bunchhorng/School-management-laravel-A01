@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildingController;
+use App\Http\Controllers\FloorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::apiResource('/building', [BuildingController::class]);
+// Route::apiResource('/building', BuildingController::class);
 Route::get('/buildings', [BuildingController::class, 'index']);
 Route::post('/buildings', [BuildingController::class, 'store']);
 Route::get('/buildings/{building}', [BuildingController::class, 'show']);
 Route::put('/buildings/{building}', [BuildingController::class, 'update']);
 Route::delete('/buildings/{building}', [BuildingController::class, 'destroy']);
+
+Route::apiResource('/floors', FloorController::class);
