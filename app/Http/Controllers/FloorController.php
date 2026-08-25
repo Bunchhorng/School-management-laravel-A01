@@ -54,7 +54,7 @@ class FloorController extends Controller
     {
         $validated = $request->validate([
             'floor_number'=>'required|string|max:50',
-            'building_id'=>'required|integer|unique:floor,building_id'
+            'building_id'=>'required|integer|exists:buildings,id'
         ]);
         
         $floor->update($validated);
