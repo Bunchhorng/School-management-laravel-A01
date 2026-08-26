@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\FloorController;
 use App\Http\Controllers\TeacherController;
@@ -36,3 +37,7 @@ Route::post('/teachers', [TeacherController::class, 'store']);
 Route::get('/teachers/{teacher}', [TeacherController::class, 'show']);
 Route::put('/teachers/{teacher}', [TeacherController::class, 'update']);
 Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy']);
+
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
