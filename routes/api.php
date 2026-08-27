@@ -23,21 +23,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Route::apiResource('/building', BuildingController::class);
-Route::get('/buildings', [BuildingController::class, 'index']);
-Route::post('/buildings', [BuildingController::class, 'store']);
-Route::get('/buildings/{building}', [BuildingController::class, 'show']);
-Route::put('/buildings/{building}', [BuildingController::class, 'update']);
-Route::delete('/buildings/{building}', [BuildingController::class, 'destroy']);
-
-Route::apiResource('/floors', FloorController::class);
-
-
-Route::get('/teachers', [TeacherController::class, 'index']);
-Route::post('/teachers', [TeacherController::class, 'store']);
-Route::get('/teachers/{teacher}', [TeacherController::class, 'show']);
-Route::put('/teachers/{teacher}', [TeacherController::class, 'update']);
-Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy']);
-
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::middleware(['auth:sanctum', 'role:user'])->group(function(){
+    Route::get('/teachers', [TeacherController::class, 'index']);
+    Route::post('/teachers', [TeacherController::class, 'store']);
+    Route::get('/teachers/{teacher}', [TeacherController::class, 'show']);
+    Route::put('/teachers/{teacher}', [TeacherController::class, 'update']);
+    Route::delete('/teachers/{teacher}', [TeacherController::class, 'destroy']);
+
+    Route::get('/buildings', [BuildingController::class, 'index']);
+    Route::post('/buildings', [BuildingController::class, 'store']);
+    Route::get('/buildings/{building}', [BuildingController::class, 'show']);
+    Route::put('/buildings/{building}', [BuildingController::class, 'update']);
+    Route::delete('/buildings/{building}', [BuildingController::class, 'destroy']);
+
+    Route::apiResource('/floors', FloorController::class);
+});
